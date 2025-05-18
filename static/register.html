@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.5.3/socket.io.min.js"></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1 class="header">RoboChat</h1>
+        <form id="registr-form" class="registr-form">
+            <div class="register-form-div">
+                <label for="login">Логін</label>
+                <input type="text" id="login" name="login" class="register_input" placeholder="Логін">
+                <label for="login">Пароль</label>
+                <input type="text" id="password" name="password" class="register_input" placeholder="Пароль">
+                <label for="login">Повторіть пароль</label>
+                <input type="text" id="passwordAgain" name="passwordAgain" class="register_input" placeholder="Пароль">
+                <input type="submit" class="submit" value="Send">
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

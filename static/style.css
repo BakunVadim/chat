@@ -1,3 +1,7 @@
+:root{
+    --color-blok: rgb(0, 0, 151);
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -19,7 +23,7 @@ main{
     height: 5rem;
     text-align: center;
     width: 100%;
-    background-color: blue;
+    background-color: var(--color-blok);
     font-size: 2rem;
     color: white;
     padding: 1.5rem;
@@ -40,7 +44,7 @@ main{
 }
 
 .submit{
-    background-color: blue;
+    background-color: var(--color-blok);
     color: white;
     padding: 0 2rem;
     font-weight: bold;
@@ -57,10 +61,35 @@ ul{
 }
 
 li{
-    background-color: blue;
+    background-color: var(--color-blok);
     border-radius: 1rem;
     color: white;
     padding: 1rem;
     font-size: 1.5rem;
     margin: 0.5rem;
+}
+
+.registr-form{
+    padding-top: 5rem;
+    height: calc(100vh - 4.5rem);
+
+    /* height: 50vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    
+}
+
+.register-form-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: calc(100vw - 200px);
+    padding: 1.5rem;
+    gap: 0.5rem;
+    background-color: var(--color-blok);
+    border-radius: 1rem;
 }
