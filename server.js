@@ -25,9 +25,9 @@ const server = http.createServer((req, res) => {
         if (req.url === '/style.css') {
             return res.end(styleCssFile);
         }
-        else if (req.url === '/script.js') {
-            return res.end(scriptFile);
-        }
+        // else if (req.url === '/script.js') {
+        //     return res.end(scriptFile);
+        // }
         else if (req.url === '/auth.js') {
             return res.end(authScriptFile);
         }
@@ -36,7 +36,8 @@ const server = http.createServer((req, res) => {
         }
         else if (req.url === '/login.html') {
             return res.end(loginHtmlFile);
-        } else return guarded(req, res);
+        } 
+        else return guarded(req, res);
     }
 
 
@@ -98,7 +99,8 @@ function login(req, res) {
 function guarded(req, res) {
     const credentionals = getCredentionals(req);
     if(!credentionals) {
-      res.writeHead(401, {'Location': '/register'})
+      res.writeHead(302, {'Location': '/login.html'});
+      return res.end();
     }
     if(req.method === 'GET') {
       switch(req.url) {
@@ -107,7 +109,7 @@ function guarded(req, res) {
       }
     }
     res.writeHead(404);
-    return res.end('Error 404');
+    return res.end('Error 404!!!');
   }
 
   
@@ -125,13 +127,34 @@ server.listen(3000);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+io.use((socket, next) => {
+    const cookie = socket.handshake.auth.cookie;
+    const credentionals = parseTokenFromCookie(socket.handshake.auth.cookie);
+    if(!credentionals) {
+      next(new Error("no auth"));
+    }
+    socket.credentionals = credentionals;
+    next();
+  });
+
+  function parseTokenFromCookie(cookieStr) {
+        const cookies = require('cookie').parse(cookieStr || '');
+        const token = cookies.token;
+        if (!token || !validAuthTokens.includes(token)) return null;
+        const [user_id, login] = token.split('.');
+        if (!user_id || !login) return null;
+        return { user_id, login };
+    }
+
 io.on('connection', async (socket) => {
     console.log(socket.id);
+    let userName = socket.credentionals?.login;
+    let userID = socket.credentionals?.user_id;
     let messages = await db.getMessages();
-    let userName = 'admin';
+    
     socket.emit('all_messages', messages);
     socket.on('new_message', (message) => {
-        db.addMessage(message, 1)
+        db.addMessage(message, userID);
         io.emit('message', userName + ': ' + message);
     })
 });

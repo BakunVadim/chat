@@ -93,3 +93,12 @@ li{
     background-color: var(--color-blok);
     border-radius: 1rem;
 }
+
+#exitButton, #registerButton{
+    position: fixed;
+    order: -1;
+    top: 5px;
+    right: 5px;
+    height: 30px;
+
+}

@@ -1,8 +1,13 @@
-const socket = io();
+const socket = io({
+    auth:{
+        cookie: document.cookie
+    }
+});
 
 const form = document.getElementById("form");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
+const exitButton = document.getElementById("exitButton");
 
 socket.on('all_messages', function(msgArray){ 
     console.log(msgArray);
@@ -28,4 +33,10 @@ socket.on('message', function(msg){
     console.log(item);
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+})
+
+
+exitButton.addEventListener('click', (e) =>{
+    document.cookie = 'token=; Max-Age=0';
+    location.assign('/login.html')
 })
